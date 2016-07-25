@@ -1,0 +1,27 @@
+из последнего что я вижу на альфе это:
+1. 2016-07-25 13:45:52.768 пришел логин кастомера на гейт
+2. 2016-07-25 13:45:57.667 пришел ответ от кастомер сервиса
+3. 2016-07-25 13:46:21.259 создаем апи токен (7953460b-308c-4c70-824b-ada106ec9517) в базе и отправляем json response клиенту  
+
+3. создаем апи токен (7953460b-308c-4c70-824b-ada106ec9517) в базе и отправляем json response
+
+2016-07-25 13:46:21.680 GMT+0000 INFO  [default task-3] [customer-gateway.com.neklo.ustaxi.gateway.CustomerEndpoint] [eventId=11f202dd-
+
+2016-07-25 13:46:21.259 GMT+0000 INFO  [cached3] [customer-gateway.com.neklo.ustaxi.gateway.send.CDIDependencyWrapper] [eventId=5f5226e6-c256-407a-b1fc-3630f8d23058, eventSequenceId=ce3360f7-09e7-4ce8-a493-d9cea6dd8aa7, eventType=CUSTOMER_API_TOKEN] - Send json response to user [e67d63f9-8fed-4757-b32d-e33cfb774f82] to session [kJaSCpxVEmOwWMBvvGEZSBub]: {"type":"CUSTOMER_API_TOKEN","sequence_id":"ce3360f7-09e7-4ce8-a493-d9cea6dd8aa7","data":{"api_token":"7953460b-308c-4c70-824b-ada106ec9517","api_token_expiration_date":"2016-08-01T13:45:57Z","api_token_allowed_event_types":null,"real_customer_id":"9eae825f-b536-435d-9631-e21bb353ef11"}}
+
+4. 2016-07-25 13:46:21.680 приходит запрос (в нем верный токен 7953460b-308c-4c70-824b-ada106ec9517)
+
+2016-07-25 13:46:21.680 GMT+0000 INFO  [default task-3] [customer-gateway.com.neklo.ustaxi.gateway.CustomerEndpoint] [eventId=11f202dd-d54e-45a6-9845-3800ee454c4a, eventSequenceId=d8e3ea8e-abd7-40ba-99c2-8929646c5cf2, eventType=POLYGON_CITY_REQ] - Incoming web socket request: {
+  "type": "CUSTOMER_GET_PROFILE",
+  "api_token": "7953460b-308c-4c70-824b-ada106ec9517",
+  "sequence_id": "c1e084a6-12ec-4845-828b-fe155b4c37d5"
+}
+
+но в базе такой токен не находится
+
+2016-07-25 13:46:21.688 GMT+0000 ERROR [default task-3] [customer-gateway.com.neklo.ustaxi.gateway.WebSocketExceptionHandler] [eventId=59e3f462-87a8-41c5-be5e-dfb49bd2c4ce, eventSequenceId=c1e084a6-12ec-4845-828b-fe155b4c37d5, eventType=CUSTOMER_GET_PROFILE] - Exception occurred in WebSocket Endpoint, uuid: [e4f0940f-747a-43b5-8efb-6d089511f620]
+ com.neklo.ustaxi.common.exception.AuthenticationException: null
+	at com.neklo.ustaxi.service.impl.PostgresAuthenticationServiceImpl.doAuthenticate(PostgresAuthenticationServiceImpl.java:55)
+	at com.neklo.ustaxi.service.impl.PostgresAuthenticationServiceImpl.authenticate(PostgresAuthenticationServiceImpl.java:32)
+	at com.neklo.ustaxi.gateway.CustomerAuthenticationProvider.authenticate(CustomerAuthenticationProvider.java:54)
+	at com.neklo.ustaxi.gateway.CustomerAuthenticationProvider$Proxy$_$$_WeldSubclass.authenticate(Unknown Source)
