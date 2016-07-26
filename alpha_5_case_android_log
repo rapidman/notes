@@ -1,0 +1,27 @@
+логи взяты с https://gist.github.com/freelanseod/46b3c764c5f71e42136d013c09a76f54
+5 кейс из https://docs.google.com/spreadsheets/d/1O5yeVMA2HK-CcPjAKiVv3d0UALsHyMdOlBLFzDZYY70/edit#gid=0
+
+
+В конце логов андроида, после того как IOS девайс залогинился под тем же аккаунтом получает HTTP ошибку: 403
+после этого его WebSocket коннект закрывается
+
+07-26 11:31:13.572 1368-1368/com.fastendriver D/FastenDriverApp: ╔════════════════════════════════════════════════════════════════════════════════════════
+07-26 11:31:13.572 1368-1368/com.fastendriver D/FastenDriverApp: ║ JsonHttpResponseHandler$2$1.run  (JsonHttpResponseHandler.java:203)
+07-26 11:31:13.582 1368-1368/com.fastendriver D/FastenDriverApp: ╟────────────────────────────────────────────────────────────────────────────────────────
+07-26 11:31:13.582 1368-1368/com.fastendriver D/FastenDriverApp: ║ 403 {"message":"Your API Token has been expired","uuid":"7225d5ce-71fc-4d7c-95fd-b47bbcd86b3f"} cz.msebera.android.httpclient.client.HttpResponseException: Forbidden
+07-26 11:31:13.582 1368-1368/com.fastendriver D/FastenDriverApp: ╚════════════════════════════════════════════════════════════════════════════════════════
+07-26 11:31:14.292 1368-4772/com.fastendriver W/FastenDriverApp: ╔════════════════════════════════════════════════════════════════════════════════════════
+07-26 11:31:14.292 1368-4772/com.fastendriver W/FastenDriverApp: ║ WebSocket.finish  (WebSocket.java:3336)
+07-26 11:31:14.292 1368-4772/com.fastendriver W/FastenDriverApp: ╟────────────────────────────────────────────────────────────────────────────────────────
+07-26 11:31:14.302 1368-4772/com.fastendriver W/FastenDriverApp: ║ WS Manager onDisconnected: closed by server true
+
+С одной стороны все логично, но похоже девайсу недостаточно информации передается для разлогина?
+Может еще код ошибки дополнительно завести?
+Хотя если коннект все же рвется сервером
+
+07-26 11:31:14.302 1368-4772/com.fastendriver W/FastenDriverApp: ║ WS Manager onDisconnected: closed by server true
+
+то девайс может попробовать сделать запрос по websoket со старым токеном и получить теперь
+authentication.tokenExpired
+
+Вообщем что не хватает девайсу в данной ситуации?
