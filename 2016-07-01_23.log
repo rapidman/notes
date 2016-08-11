@@ -1345,37 +1345,60 @@ select customer_id from audt.customer_location where event_timestamp >= '2016-06
        ],
        "Values": [
          [
-           "1",
-           "2016-07-01",
-           "23",
-           "0",
-           "0",
-           "0",
-           "0",
-           "27.90192743764171",
-           "0.7416326530612244",
-           "3",
-           "3",
-           "6",
-           "1",
-           "3",
-           "5",
-           "7",
-           "3",
-           "3",
-           "3",
-           "2",
-           "2",
-           "1",
-           "2",
-           "0",
-           "3",
-           "3",
-           "0",
-           "0"
+                     "1",
+                     "2016-07-01",
+                     "23",
+                     "0",
+                     "0",
+                     "0",
+                     "0",
+                     "27.40793650793651",
+                     "0.7485714285714284",
+                     **** short_trend ****
+                     "3", //3
+                     "3", //3
+                     "6", //6
+                     "1", //1
+                     "3", //3
+                     "5", //5
+                     "7", //7
+                     "3", //3
+                     "3", //3
+                     "3", //3
+                     "2", //2
+                     "2", //2
+                     "1", //1
+                     "2", //1?
+                     "0", //1?
+                     "3", //1?
+                     "3", //2?
+                     "0", //2?
+                     "0"  //2?
          ],
        ]
      }
    },
    "GlobalParameters": []
  }
+
+Intouchs_0|Intouchs_1|Intouchs_2|Intouchs_3|Intouchs_4|Intouchs_5|Intouchs_6|Intouchs_7|Intouchs_8|Intouchs_9|Intouchs_10|Intouchs_11|
+         3|         3|         6|         1|         3|         5|         7|         3|         3|         3|          2|          2|
+
+intouchs_lag_144_1|intouchs_lag_144_2|intouchs_lag_144_3|intouchs_lag_144_4|intouchs_lag_144_5|intouchs_lag_144_6|intouchs_lag_144_7
+                 1|                 2|                 0|                 3|                 3|                 0|                0|
+
+ Выяснилось что наши периоды отличаются на 4 часа (или 24 периода). У меня UTC у Димы UTC -4 Бостонское время.
+ Поэтому моему периоду 2016-07-01,23 соотвествует период 2016-06-30,142 Димы
+
+precip_intensity,precip_probability,humidity,temp,ev_rain,ev_snow,date,interval,
+0.0,0.0,0.72,21.81111111111111,0.0,0.0,2016-06-30,142,
+
+intouchs_0,intouchs_1,intouchs_2,intouchs_3,intouchs_4,intouchs_5,intouchs_6,intouchs_7,intouchs_8,intouchs_9,intouchs_10,intouchs_11,
+3,3,6,1,3,5,7,3,3,3,2,2,
+
+Эта группа отличается!!!!!
+intouchs_lag_144_1,intouchs_lag_144_2,intouchs_lag_144_3,intouchs_lag_144_4,intouchs_lag_144_5,intouchs_lag_144_6,intouchs_lag_144_7,
+1,1,1,1,2,2,2
+
+polygon
+1
