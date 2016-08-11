@@ -1306,3 +1306,76 @@ select customer_id from audt.customer_location where event_timestamp >= '2016-06
 
 
  Вообщем надо сверить еще раз методику расета на примере группы short_trend.
+
+
+ После правки определения вхождения точки в полигон выходной json такой:
+
+ {
+   "Inputs": {
+     "input": {
+       "ColumnNames": [
+         "polygon",
+         "date",
+         "interval",
+         "ev_rain",
+         "ev_snow",
+         "precip_probability",
+         "precip_intensity",
+         "temp",
+         "humidity",
+         "Intouchs_0",
+         "Intouchs_1",
+         "Intouchs_2",
+         "Intouchs_3",
+         "Intouchs_4",
+         "Intouchs_5",
+         "Intouchs_6",
+         "Intouchs_7",
+         "Intouchs_8",
+         "Intouchs_9",
+         "Intouchs_10",
+         "Intouchs_11",
+         "intouchs_lag_144_1",
+         "intouchs_lag_144_2",
+         "intouchs_lag_144_3",
+         "intouchs_lag_144_4",
+         "intouchs_lag_144_5",
+         "intouchs_lag_144_6",
+         "intouchs_lag_144_7"
+       ],
+       "Values": [
+         [
+           "1",
+           "2016-07-01",
+           "23",
+           "0",
+           "0",
+           "0",
+           "0",
+           "27.90192743764171",
+           "0.7416326530612244",
+           "3",
+           "3",
+           "6",
+           "1",
+           "3",
+           "5",
+           "7",
+           "3",
+           "3",
+           "3",
+           "2",
+           "2",
+           "1",
+           "2",
+           "0",
+           "3",
+           "3",
+           "0",
+           "0"
+         ],
+       ]
+     }
+   },
+   "GlobalParameters": []
+ }
