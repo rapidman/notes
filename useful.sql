@@ -97,3 +97,25 @@ join pg_index i on ui.indexrelid = i.indexrelid
 where not indisunique and idx_scan < 50 and pg_relation_size(relid) > 5 * 819
 order by pg_relation_size(i.indexrelid) / nullif(idx_scan, 0) desc, 
 pg_relation_size(i.indexrelid) desc;
+
+//поиск неиспользуемых индексов
+select schemaname || '.' || relname as table,
+indexrelname as index,
+pg_size_pretty(pg_relation_size(i.indexrelid)) as index_size,
+idx_scan as index_scans
+from pg_stat_user_indexes ui
+join pg_index i on ui.indexrelid = i.indexrelid
+where not indisunique and idx_scan < 50 and pg_relation_size(relid) > 5 * 819
+order by pg_relation_size(i.indexrelid) / nullif(idx_scan, 0) desc, 
+pg_relation_size(i.indexrelid) desc;
+
+//поиск дуппликатов индексов
+select a.indrelid::regclass, a.indexrelid::regclass, b.indexrelid::regclass
+from (select *, array_to_string(indkey, ' ') as cols from pg_index) a join 
+	(select *, array_to_string(indkey, ' ') as cols from pg_index) b on
+(a.indrelid = b.indrelid and a.indexrelid > b.indexrelid  and
+	( (a.cols like b.cols || '%' and coalesce(substr(a.cols, length(b.cols) + 1,1), ' ') = ' ' ) or
+	  (b.cols like a.cols || '%' and coalesce(substr(b.cols, length(a.cols) + 1,1), ' ') = ' ' )
+	)
+) order by indrelid;
+
