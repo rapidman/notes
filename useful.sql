@@ -26,6 +26,21 @@ WHERE relkind = 'r'
 ) a
 ) a;
 
+************************************
+//находим ИД драйвера
+taxi=> select id from core.driver where ext_id='1e6313e5-7037-4706-a2e3-ac026ff7ff88';
+  id  
+------
+ 2735
+(1 row)
+
+//просмотр пэйчека
+select p.completion_rate, pd.* from core.billing_paycheck p, core.billing_payday pd where p.driver_id=2735 and pd.id=p.payday_id order by pd.id desc;
+
+//поездки драйвера за период
+select order_start_date, order_end_date, driver_rating, final_driver_cost from orders.order_stat where driver_id=2735 and order_start_date between '2016-10-05 11:54:17' and '2016-10-05 12:16:32' order by order_id desc;
+
+
 
 SELECT count(pid), usename FROM pg_stat_activity group by usename;
  count |       usename        
