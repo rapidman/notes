@@ -132,3 +132,6 @@ select p.completion_rate, pd.* from core.billing_paycheck p, core.billing_payday
 
 //поездки драйвера за период
 select order_start_date, order_end_date, driver_rating, final_driver_cost from orders.order_stat where driver_id=2735 and order_start_date between '2016-10-05 11:54:17' and '2016-10-05 12:16:32' order by order_id desc;
+
+//кол-во поездок для CompletionRate
+SELECT SUM(order_completed_cnt) AS order_completed_cnt, SUM(cust_before_arrive_cnt) AS cust_before_arrive_cnt, SUM(cust_before_trip_cnt) AS  cust_before_trip_cnt, SUM(drv_before_trip_cnt) AS drv_before_trip_cnt FROM (SELECT  CASE WHEN o.final_driver_cost > 175 AND o.sub_state = 'ORDER_COMPLETED' THEN 1 ELSE 0 END AS order_completed_cnt, CASE WHEN o.sub_state = 'CUSTOMER_CANCEL_BEFORE_ARRIVE' THEN 1 ELSE 0 END AS cust_before_arrive_cnt, CASE WHEN o.sub_state = 'CUSTOMER_CANCEL_BEFORE_TRIP' THEN 1 ELSE 0 END AS cust_before_trip_cnt, CASE WHEN o.final_driver_cost > 0 AND o.sub_state = 'DRIVER_CANCEL_BEFORE_TRIP' THEN 1 ELSE 0 END AS drv_before_trip_cnt FROM orders.order_stat o WHERE  o.driver_id = 474 AND o.launch_region_id = '11' AND (o.order_end_date >= '2016-10-07 08:31:10.693' AND o.order_end_date <= '2016-10-07 09:03:17.877') AND o.sub_state IN ('ORDER_COMPLETED', 'CUSTOMER_CANCEL_BEFORE_ARRIVE', 'CUSTOMER_CANCEL_BEFORE_TRIP', 'DRIVER_CANCEL_BEFORE_TRIP')) o
