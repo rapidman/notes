@@ -138,25 +138,13 @@ SELECT SUM(order_completed_cnt) AS order_completed_cnt, SUM(cust_before_arrive_c
 
 
 *************************
-select d.id, c.ssn_document_id, doc.number, cat.* from core.carrier c, core.driver d, core.document doc, core.document_type_catalog cat where d.carrier_id = c.id and doc.carrier_id=c.id and doc.document_type_id=cat.id and cat.entity_type='SSN' limit 10;
-
-select * from (select count(*) as cnt, doc.number from core.carrier c, core.driver d, core.document doc, core.document_type_catalog cat where d.carrier_id = c.id and doc.carrier_id=c.id and doc.document_type_id=cat.id and cat.entity_type='SSN' group by doc.number) t 
+//гуппировка по ИД драйвера, SSN и validation_status 
+//показывает сколько не уникальных SSN привязано конкретному юзеру
+select * from 
+    (select count(*) as cnt, doc.number, d.id, d.validation_status 
+     from core.carrier c, core.driver d, core.document doc, core.document_type_catalog cat 
+     where d.carrier_id = c.id and doc.carrier_id=c.id and doc.document_type_id=cat.id and cat.entity_type='SSN' 
+     group by doc.number, d.id, d.validation_status 
+     order by d.id
+    ) t 
 where t. cnt > 1;
-
-select count(*) from (select count(*) as cnt, doc.number, d.validation_status, d.carrier_id from core.carrier c, core.driver d, core.document doc, core.document_type_catalog cat where d.carrier_id = c.id and doc.carrier_id=c.id and doc.document_type_id=cat.id and cat.entity_type='SSN' group by doc.number, d.validation_status, d.carrier_id) t 
-where t. cnt > 1;
-
-validation_status
-
-select count(*) as cnt, doc.number, d.validation_status from core.carrier c, core.driver d, core.document doc, core.document_type_catalog cat where d.carrier_id = c.id and doc.carrier_id=c.id and doc.document_type_id=cat.id and cat.entity_type='SSN' group by doc.number, d.validation_status
-
-select * from (select count(*) as cnt, doc.number, d.validation_status from core.carrier c, core.driver d, core.document doc, core.document_type_catalog cat where d.carrier_id = c.id and doc.carrier_id=c.id and doc.document_type_id=cat.id and cat.entity_type='SSN' group by doc.number, d.validation_status) t 
-where t. cnt > 3;
-
-select count(*) as cnt, number, validation_status, carrier_id from (select count(*) as cnt, doc.number, d.validation_status, d.carrier_id from core.carrier c, core.driver d, core.document doc, core.document_type_catalog cat where d.carrier_id = c.id and doc.carrier_id=c.id and doc.document_type_id=cat.id and cat.entity_type='SSN' group by doc.number, d.validation_status, d.carrier_id) t 
-where t.cnt > 1 group by number, validation_status, carrier_id; 
-
-select * from
-(select count(*) as cnt, number, validation_status, carrier_id from (select count(*) as cnt, doc.number, d.validation_status, d.carrier_id from core.carrier c, core.driver d, core.document doc, core.document_type_catalog cat where d.carrier_id = c.id and doc.carrier_id=c.id and doc.document_type_id=cat.id and cat.entity_type='SSN' group by doc.number, d.validation_status, d.carrier_id) t 
-where t.cnt > 1 group by number, validation_status, carrier_id) o
-where o.cnt > 1 
