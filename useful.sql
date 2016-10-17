@@ -135,3 +135,28 @@ select order_start_date, order_end_date, driver_rating, final_driver_cost from o
 
 //кол-во поездок для CompletionRate
 SELECT SUM(order_completed_cnt) AS order_completed_cnt, SUM(cust_before_arrive_cnt) AS cust_before_arrive_cnt, SUM(cust_before_trip_cnt) AS  cust_before_trip_cnt, SUM(drv_before_trip_cnt) AS drv_before_trip_cnt FROM (SELECT  CASE WHEN o.final_driver_cost > 175 AND o.sub_state = 'ORDER_COMPLETED' THEN 1 ELSE 0 END AS order_completed_cnt, CASE WHEN o.sub_state = 'CUSTOMER_CANCEL_BEFORE_ARRIVE' THEN 1 ELSE 0 END AS cust_before_arrive_cnt, CASE WHEN o.sub_state = 'CUSTOMER_CANCEL_BEFORE_TRIP' THEN 1 ELSE 0 END AS cust_before_trip_cnt, CASE WHEN o.final_driver_cost > 0 AND o.sub_state = 'DRIVER_CANCEL_BEFORE_TRIP' THEN 1 ELSE 0 END AS drv_before_trip_cnt FROM orders.order_stat o WHERE  o.driver_id = 474 AND o.launch_region_id = '11' AND (o.order_end_date >= '2016-10-07 08:31:10.693' AND o.order_end_date <= '2016-10-07 09:03:17.877') AND o.sub_state IN ('ORDER_COMPLETED', 'CUSTOMER_CANCEL_BEFORE_ARRIVE', 'CUSTOMER_CANCEL_BEFORE_TRIP', 'DRIVER_CANCEL_BEFORE_TRIP')) o
+
+
+*************************
+select d.id, c.ssn_document_id, doc.number, cat.* from core.carrier c, core.driver d, core.document doc, core.document_type_catalog cat where d.carrier_id = c.id and doc.carrier_id=c.id and doc.document_type_id=cat.id and cat.entity_type='SSN' limit 10;
+
+select * from (select count(*) as cnt, doc.number from core.carrier c, core.driver d, core.document doc, core.document_type_catalog cat where d.carrier_id = c.id and doc.carrier_id=c.id and doc.document_type_id=cat.id and cat.entity_type='SSN' group by doc.number) t 
+where t. cnt > 1;
+
+select count(*) from (select count(*) as cnt, doc.number, d.validation_status, d.carrier_id from core.carrier c, core.driver d, core.document doc, core.document_type_catalog cat where d.carrier_id = c.id and doc.carrier_id=c.id and doc.document_type_id=cat.id and cat.entity_type='SSN' group by doc.number, d.validation_status, d.carrier_id) t 
+where t. cnt > 1;
+
+validation_status
+
+select count(*) as cnt, doc.number, d.validation_status from core.carrier c, core.driver d, core.document doc, core.document_type_catalog cat where d.carrier_id = c.id and doc.carrier_id=c.id and doc.document_type_id=cat.id and cat.entity_type='SSN' group by doc.number, d.validation_status
+
+select * from (select count(*) as cnt, doc.number, d.validation_status from core.carrier c, core.driver d, core.document doc, core.document_type_catalog cat where d.carrier_id = c.id and doc.carrier_id=c.id and doc.document_type_id=cat.id and cat.entity_type='SSN' group by doc.number, d.validation_status) t 
+where t. cnt > 3;
+
+select count(*) as cnt, number, validation_status, carrier_id from (select count(*) as cnt, doc.number, d.validation_status, d.carrier_id from core.carrier c, core.driver d, core.document doc, core.document_type_catalog cat where d.carrier_id = c.id and doc.carrier_id=c.id and doc.document_type_id=cat.id and cat.entity_type='SSN' group by doc.number, d.validation_status, d.carrier_id) t 
+where t.cnt > 1 group by number, validation_status, carrier_id; 
+
+select * from
+(select count(*) as cnt, number, validation_status, carrier_id from (select count(*) as cnt, doc.number, d.validation_status, d.carrier_id from core.carrier c, core.driver d, core.document doc, core.document_type_catalog cat where d.carrier_id = c.id and doc.carrier_id=c.id and doc.document_type_id=cat.id and cat.entity_type='SSN' group by doc.number, d.validation_status, d.carrier_id) t 
+where t.cnt > 1 group by number, validation_status, carrier_id) o
+where o.cnt > 1 
