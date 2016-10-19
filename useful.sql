@@ -148,3 +148,19 @@ select * from
      order by d.id
     ) t 
 where t. cnt > 1;
+
+//select SSN
+select 
+doc.number as ssn, w9.ssn as w9_ssn, d.id as drv_id, sp.email, d.last_login_ts, doc.id as doc_id, c.ssn_document_id, d.validation_status as driver_status, doc.status as doc_status
+from core.carrier c, core.driver d, core.document doc, core.document_type_catalog cat, core.profile p, core.security_profile sp, core.w9_form w9
+where 
+	d.carrier_id = c.id and 
+	doc.carrier_id=c.id and 
+	doc.document_type_id=cat.id and 
+	cat.entity_type='SSN' and 
+	d.validation_status = 'ACTIVE' and
+	p.profile_type = 'driver' and
+	d.profile_id = p.id and
+	p.security_profile_id = sp.id and
+	p.w9_form_id = w9.id
+order by doc.number, d.last_login_ts desc;
