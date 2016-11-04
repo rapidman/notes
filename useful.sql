@@ -164,3 +164,17 @@ where
 	p.security_profile_id = sp.id and
 	p.w9_form_id = w9.id
 order by doc.number, d.last_login_ts desc;
+
+
+****revoke all************
+revoke all on tablespace pg_default from public;
+revoke all on tablespace pg_global  from public;
+revoke all on database mydb from public cascade;
+revoke all                   on schema myschema from public cascade;
+revoke all on all tables     in schema myschema from public cascade;
+revoke all on all sequences  in schema myschema from public cascade;
+revoke all on all functions  in schema myschema from public cascade;
+alter default privileges     in schema myschema revoke all on tables      from public cascade;
+alter default privileges     in schema myschema revoke all on sequences   from public cascade;
+alter default privileges     in schema myschema revoke all on functions   from public cascade;
+alter default privileges     in schema myschema revoke all on types       from public cascade;
