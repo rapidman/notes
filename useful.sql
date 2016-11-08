@@ -178,3 +178,6 @@ alter default privileges     in schema myschema revoke all on tables      from p
 alter default privileges     in schema myschema revoke all on sequences   from public cascade;
 alter default privileges     in schema myschema revoke all on functions   from public cascade;
 alter default privileges     in schema myschema revoke all on types       from public cascade;
+
+--copy database
+pg_dump ustahi | psql ustaxi_backup
