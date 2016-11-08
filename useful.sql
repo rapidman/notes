@@ -179,5 +179,12 @@ alter default privileges     in schema myschema revoke all on sequences   from p
 alter default privileges     in schema myschema revoke all on functions   from public cascade;
 alter default privileges     in schema myschema revoke all on types       from public cascade;
 
+revoke all on database ustaxi_backup from rider_srv cascade;
+revoke all                   on schema common from rider_srv cascade;
+revoke all on all tables     in schema common from rider_srv cascade;
+revoke all                   on schema core from rider_srv cascade;
+revoke all on all tables     in schema core from rider_srv cascade;
+drop USER  rider_srv;
+
 --copy database
-pg_dump ustahi | psql ustaxi_backup
+pg_dump ustaxi | psql ustaxi_backup
