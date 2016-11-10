@@ -184,7 +184,9 @@ revoke all                   on schema common from rider_srv cascade;
 revoke all on all tables     in schema common from rider_srv cascade;
 revoke all                   on schema core from rider_srv cascade;
 revoke all on all tables     in schema core from rider_srv cascade;
+revoke all on SEQUENCE   core.customer_device_imei_id_seq from rider_srv cascade;
 drop USER  rider_srv;
+
 
 --copy database
 pg_dump ustaxi | psql ustaxi_backup
