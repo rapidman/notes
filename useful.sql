@@ -190,3 +190,11 @@ drop USER  rider_srv;
 
 --copy database
 pg_dump ustaxi | psql ustaxi_backup
+
+--create db
+psql -U postgres -d ustaxi -f sql/create-catalog-model.sql
+psql -U postgres -d ustaxi -f sql/create-model.sql
+psql -U postgres -d ustaxi -f sql/create-audit-model.sql
+psql -U postgres -d ustaxi -f sql/create-authentication-model.sql
+psql -U postgres -d ustaxi -f sql/create-grant-users.sql
+psql -U postgres -d ustaxi -f sql/sql-seed-data.sql
