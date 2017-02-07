@@ -1,0 +1,29 @@
+package org.ustaxi.blackboxtest.util;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+/**
+ * @author timur
+ */
+public class UrlGen {
+    public static String DATE_PATTERN = "yyyy-MM-dd";
+    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat.forPattern(DATE_PATTERN);
+
+    public static void main(String[] args){
+//        String url = "wget --output-document=2017-01-%s_55_outputs.csv \"http://172.16.16.208:8080/predict-srv/api/export?from=2017-01-%s&to=2017-01-%s&cityId=55&pass=e1e61bef7bcbd26459a798d3d99225b8&type=outputs&history=false\"";
+//        String url = "wget --output-document=2017-01-%s_55_inputs.csv \"http://172.16.16.208:8080/predict-srv/api/export?from=2017-01-%s&to=2017-01-%s&cityId=55&pass=e1e61bef7bcbd26459a798d3d99225b8&type=inputs&history=false\"";
+//        String url = "wget --output-document=2017-01-%s_44_outputs.csv \"http://172.16.16.208:8080/predict-srv/api/export?from=2017-01-%s&to=2017-01-%s&cityId=44&pass=e1e61bef7bcbd26459a798d3d99225b8&type=outputs&history=false\"";
+//        String url = "wget --output-document=2017-01-%s_44_inputs.csv \"http://172.16.16.208:8080/predict-srv/api/export?from=2017-01-%s&to=2017-01-%s&cityId=44&pass=e1e61bef7bcbd26459a798d3d99225b8&type=inputs&history=false\"";
+        DateTime start = new DateTime(DateTime.parse("2016-11-27", DATE_FORMATTER));
+//        String url = "wget --output-document=%s_55_outputs.csv \"http://172.16.16.208:8080/predict-srv/api/export?from=%s&to=%s&cityId=55&pass=e1e61bef7bcbd26459a798d3d99225b8&type=outputs&history=true\"";
+//        String url = "wget --output-document=%s_44_outputs.csv \"http://172.16.16.208:8080/predict-srv/api/export?from=%s&to=%s&cityId=44&pass=e1e61bef7bcbd26459a798d3d99225b8&type=outputs&history=true\"";
+//        String url = "wget --output-document=%s_55_inputs.csv \"http://172.16.16.208:8080/predict-srv/api/export?from=%s&to=%s&cityId=55&pass=e1e61bef7bcbd26459a798d3d99225b8&type=inputs&history=true\"";
+        String url = "wget --output-document=%s_44_inputs.csv \"http://172.16.16.208:8080/predict-srv/api/export?from=%s&to=%s&cityId=44&pass=e1e61bef7bcbd26459a798d3d99225b8&type=inputs&history=true\"";
+        for(int i=0; i<100;i++){
+            start = start.plusDays(1);
+            System.out.println(String.format(url, DATE_FORMATTER.print(start), DATE_FORMATTER.print(start), DATE_FORMATTER.print(start.plusDays(1))));
+        }
+    }
+}
