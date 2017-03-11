@@ -26,6 +26,7 @@ WHERE relkind = 'r'
 ) a
 ) a;
 
+select count(pid), usename, query from pg_stat_activity group by query, usename;
 
 SELECT count(pid), usename FROM pg_stat_activity group by usename;
  count |       usename        
