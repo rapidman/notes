@@ -203,3 +203,4 @@ psql -U postgres -d ustaxi -f sql/sql-seed-data.sql
 
 --copy from csv text file
 COPY myTable FROM '/path/to/file/on/server' ( FORMAT CSV, DELIMITER('|') );
+COPY audt.customer_location FROM '/home/timur/workspace/dump/intouchs-2017-03-07--2017-03-31.csv' ( FORMAT CSV, DELIMITER(',') );
