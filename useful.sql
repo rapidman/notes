@@ -199,3 +199,7 @@ psql -U postgres -d ustaxi -f sql/create-audit-model.sql
 psql -U postgres -d ustaxi -f sql/create-authentication-model.sql
 psql -U postgres -d ustaxi -f sql/create-grant-users.sql
 psql -U postgres -d ustaxi -f sql/sql-seed-data.sql
+
+
+--copy from csv text file
+COPY myTable FROM '/path/to/file/on/server' ( FORMAT CSV, DELIMITER('|') );
