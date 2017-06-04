@@ -212,3 +212,4 @@ COPY audt.customer_location FROM '/home/timur/workspace/dump/intouchs-2017-03-07
 
 --export predict sessions
 copy (select * from core.predict_session_reg) to '/tmp/predict_session_reg.csv' With CSV DELIMITER ',';
+psql -h 172.16.16.108 -U postgres ustaxi -p 5433 -o /tmp/file.csv -c 'select * from core.predict_session_reg;'
