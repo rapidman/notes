@@ -209,3 +209,6 @@ psql -U postgres -d ustaxi -f sql/sql-seed-data.sql
 COPY myTable FROM '/path/to/file/on/server' ( FORMAT CSV, DELIMITER('|') );
 COPY audt.customer_location FROM '/home/timur/workspace/dump/intouchs-2017-03-07--2017-03-31.csv' ( FORMAT CSV, DELIMITER(',') );
 COPY audt.customer_location FROM '/home/timur/workspace/dump/intouchs-2017-03-07--2017-03-31.csv' ( FORMAT CSV, DELIMITER(','), HEADER );
+
+--export predict sessions
+copy (select * from core.predict_session_reg) to '/tmp/predict_session_reg.csv' With CSV DELIMITER ',';
