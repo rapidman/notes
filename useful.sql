@@ -28,7 +28,7 @@ WHERE relkind = 'r'
 
 //pg_stat_activity
 select count(pid), usename, query, state from pg_stat_activity where usename='rider_srv' group by query, usename, state;
-
+select sum(cnt) from (select count(pid) cnt, usename, query, state from pg_stat_activity group by query, usename, state) as c;
 
 select count(pid), usename, query from pg_stat_activity group by query, usename;
 
