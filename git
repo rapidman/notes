@@ -17,3 +17,9 @@
 	git push origin {tagname} // creates new remote tag
 
 This is based on https://gist.github.com/739288 thanks to nickfloyd for it
+
+
+//force pull
+git fetch origin master
+git reset --hard FETCH_HEAD
+git clean -df
