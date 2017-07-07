@@ -1,1 +1,3 @@
 http://172.16.16.202:9990/management/subsystem/messaging/hornetq-server/default/jms-queue/billingServiceInQueue?operation=resource&include-runtime&recursive&json.pretty
+
+http://tracking-srv4:9990/management/subsystem/messaging/hornetq-server/default/jms-queue/trackingServiceInQueue?operation=resource&include-runtime&recursive&json.pretty
