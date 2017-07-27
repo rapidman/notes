@@ -216,3 +216,8 @@ psql -h 172.16.16.108 -U postgres ustaxi -p 5433 -o /tmp/file.csv -c 'select * f
 
 --kill connection
 select pg_terminate_backend(pid) from pg_stat_activity  where usename='promo_app';
+
+--delete profile
+DELETE FROM rider.phone_check_data d WHERE d.customer_id in (select id from rider.customer c where c.email='input email here');
+DELETE FROM rider.customer_payment_method pm WHERE pm.customer_id in (select id from rider.customer c where c.email='input email here');
+DELETE FROM rider.customer WHERE email='input email here';
