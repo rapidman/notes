@@ -1,0 +1,2 @@
+ //gamma
+ curl http://172.31.6.227:8500/v1/agent/services?pretty
