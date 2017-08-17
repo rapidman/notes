@@ -1,2 +1,3 @@
  //gamma
  curl http://172.31.6.227:8500/v1/agent/services?pretty
+curl http://localhost:8500/v1/health/service/notify
