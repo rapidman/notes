@@ -221,3 +221,18 @@ select pg_terminate_backend(pid) from pg_stat_activity  where usename='promo_app
 DELETE FROM rider.phone_check_data d WHERE d.customer_id in (select id from rider.customer c where c.email='input email here');
 DELETE FROM rider.customer_payment_method pm WHERE pm.customer_id in (select id from rider.customer c where c.email='input email here');
 DELETE FROM rider.customer WHERE email='input email here';
+
+--show pg users
+SELECT u.usename AS "User name",
+  u.usesysid AS "User ID",
+  CASE WHEN u.usesuper AND u.usecreatedb THEN CAST('superuser, create
+database' AS pg_catalog.text)
+       WHEN u.usesuper THEN CAST('superuser' AS pg_catalog.text)
+       WHEN u.usecreatedb THEN CAST('create database' AS
+pg_catalog.text)
+       ELSE CAST('' AS pg_catalog.text)
+  END AS "Attributes"
+FROM pg_catalog.pg_user u
+ORDER BY 1;
+
+SELECT usename FROM pg_user;
