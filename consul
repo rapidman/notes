@@ -4,3 +4,5 @@ curl http://localhost:8500/v1/health/service/notify
  curl \
     --request PUT \
     http://localhost:8500/v1/agent/service/deregister/customer
+curl \
+    https://localhost:8500/v1/agent/services
