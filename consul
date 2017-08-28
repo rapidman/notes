@@ -3,4 +3,4 @@
 curl http://localhost:8500/v1/health/service/notify
  curl \
     --request PUT \
-    https://consul.rocks/v1/agent/service/deregister/customer
+    https://localhost:8500/v1/agent/service/deregister/customer
