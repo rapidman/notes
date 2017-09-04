@@ -236,3 +236,7 @@ FROM pg_catalog.pg_user u
 ORDER BY 1;
 
 SELECT usename FROM pg_user;
+
+//find triggers
+ustaxi-# where pg_class.oid in (select tgrelid from pg_trigger)  and relname like '%driver_document_audit%';
+
