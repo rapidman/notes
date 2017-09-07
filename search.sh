@@ -30,3 +30,11 @@ egrep -R "word-1|word-2” directory-path
 //If you want to grep recursively in all .gz files, you can use:
 find -name \*client.log*.gz -print0 | xargs -0 zgrep "41956331"
 find -name mobile.log-20160217.gz -print0 | xargs -0 zgrep "b41a1420955128e1d0f2efe62a73948d5e74f783"
+
+//cut log file
+sed -n '8,12p' yourfile
+...will send lines 8 through 12 of yourfile to standard out.
+
+If you want to prepend the line number, you may wish to use cat -n first:
+
+cat -n yourfile | sed -n '8,12p'
