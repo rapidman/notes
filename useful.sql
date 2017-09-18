@@ -240,3 +240,6 @@ SELECT usename FROM pg_user;
 //find triggers
 ustaxi-# where pg_class.oid in (select tgrelid from pg_trigger)  and relname like '%driver_document_audit%';
 
+
+//delete customer
+select rider.delete_customer('qa.boston+30@fasten.com');
