@@ -4,3 +4,6 @@ curl http://localhost:8500/v1/health/service/notify
  curl \
     --request PUT \
     http://localhost:8500/v1/agent/service/deregister/customer
+
+consul kv get -recurse|grep logging.path
+consul kv delete config/apps/logging.path
