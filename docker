@@ -1,6 +1,9 @@
+//https://docs.docker.com/get-started
+
 docker container ls
 docker images
 sudo docker ps
 sudo docker exec -i -t b6d16b242c80 /bin/bash
 docker restart <container_id>
 sudo docker system prune
+docker image ls
