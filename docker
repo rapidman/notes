@@ -1,5 +1,6 @@
 //https://docs.docker.com/get-started
 
+sudo docker system prune
 docker container ls
 docker images
 sudo docker ps
