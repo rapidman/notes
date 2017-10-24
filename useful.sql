@@ -243,3 +243,10 @@ ustaxi-# where pg_class.oid in (select tgrelid from pg_trigger)  and relname lik
 
 //delete customer
 select rider.delete_customer('qa.boston+30@fasten.com');
+
+//show functions in a schema
+SELECT  proname, prosrc
+FROM    pg_catalog.pg_namespace n
+JOIN    pg_catalog.pg_proc p
+ON      pronamespace = n.oid
+WHERE   nspname = 'rider';
