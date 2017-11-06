@@ -7,3 +7,5 @@ curl http://localhost:8500/v1/health/service/notify
 
 consul kv get -recurse|grep logging.path
 consul kv delete config/apps/logging.path
+//export
+consul kv get -recurse config/rider/
