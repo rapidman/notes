@@ -1,0 +1,25 @@
+JWT_TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+                                           PAYLOAD="{\"jwt\":\"$JWT_TOKEN\",\"role\":\"ustaxi-vault\"}"
+                                           TOKEN=$(curl -i -X POST \
+                                              -H "Accept:application/octet-stream" \
+                                              -H "Content-Type:application/json" \
+                                              -d \
+                                              $PAYLOAD \
+                                              "http://{{ .Values.consul.host.external }}/v1/auth/kubernetes/login" | grep -o -P "(?<=\"client_token\":\").*(?=\",\"accessor\")") \
+                                           KEY=$(curl -i -X GET \
+                                              -H "Accept:application/octet-stream" \
+                                              -H "X-Vault-Token:$TOKEN" \
+                                             "http://{{ .Values.vault.host }}/v1/secret/jwe/rider.key") \
+                                           echo $KEY | grep -o -P "(?<=\"value\":\").*(?=\"},\"wrap_info\")" > /cache-data/gossipkey
+
+
+export TOKEN=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJ1c3RheGkiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlY3JldC5uYW1lIjoiY3VzdG9tZXItdmF1bHQtdG9rZW4teGpkaDgiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiY3VzdG9tZXItdmF1bHQiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI5NjljZjBmNS1jNDQ0LTExZTctOTE0MC0wYWNlMWY0YzQ3YTgiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6dXN0YXhpOmN1c3RvbWVyLXZhdWx0In0.hGMrQRsFYkmriT_2eMnP5wp20KEtisoc__0g81gWvW_C1TbWSq49n4AllomdexUqWpsvF2V4UCMVzNp0E7wMeI7_eEKlSnqAX2eQJNaAqBy579taNmreR-JR9shETW_w4ljt55FVuVU9GmZypaj1YzOy0WGMlBUTEMCcqL7LImh0mx92T4TnaWw5_PhQy9OOVRjOkLIjdjFQpsCZahCrRnzNql1RJuUOeP-QYz9qei1x4860Vm8LHyWELRwJCXFZ_8iEuxUs92zLIwnOKKG1Rwjc5ZevQIgwRg5m7a8pNfVdX7jHHiuRz9UiGk3oLq9S8Dyz48TS3hl-Uf_QcFUdjw
+
+
+
+curl -i -X GET -H "Accept:application/octet-stream" -H "X-Vault-Token:$TOKEN" http://10.0.29.162:8200/v1/secret/jwe/rider.key
+
+export JWT_TOKEN=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJ1c3RheGkiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlY3JldC5uYW1lIjoiY3VzdG9tZXItdmF1bHQtdG9rZW4teGpkaDgiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiY3VzdG9tZXItdmF1bHQiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI5NjljZjBmNS1jNDQ0LTExZTctOTE0MC0wYWNlMWY0YzQ3YTgiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6dXN0YXhpOmN1c3RvbWVyLXZhdWx0In0.hGMrQRsFYkmriT_2eMnP5wp20KEtisoc__0g81gWvW_C1TbWSq49n4AllomdexUqWpsvF2V4UCMVzNp0E7wMeI7_eEKlSnqAX2eQJNaAqBy579taNmreR-JR9shETW_w4ljt55FVuVU9GmZypaj1YzOy0WGMlBUTEMCcqL7LImh0mx92T4TnaWw5_PhQy9OOVRjOkLIjdjFQpsCZahCrRnzNql1RJuUOeP-QYz9qei1x4860Vm8LHyWELRwJCXFZ_8iEuxUs92zLIwnOKKG1Rwjc5ZevQIgwRg5m7a8pNfVdX7jHHiuRz9UiGk3oLq9S8Dyz48TS3hl-Uf_QcFUdjw
+export PAYLOAD='{"jwt":"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJ1c3RheGkiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlY3JldC5uYW1lIjoiY3VzdG9tZXItdmF1bHQtdG9rZW4teGpkaDgiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiY3VzdG9tZXItdmF1bHQiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI5NjljZjBmNS1jNDQ0LTExZTctOTE0MC0wYWNlMWY0YzQ3YTgiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6dXN0YXhpOmN1c3RvbWVyLXZhdWx0In0.hGMrQRsFYkmriT_2eMnP5wp20KEtisoc__0g81gWvW_C1TbWSq49n4AllomdexUqWpsvF2V4UCMVzNp0E7wMeI7_eEKlSnqAX2eQJNaAqBy579taNmreR-JR9shETW_w4ljt55FVuVU9GmZypaj1YzOy0WGMlBUTEMCcqL7LImh0mx92T4TnaWw5_PhQy9OOVRjOkLIjdjFQpsCZahCrRnzNql1RJuUOeP-QYz9qei1x4860Vm8LHyWELRwJCXFZ_8iEuxUs92zLIwnOKKG1Rwjc5ZevQIgwRg5m7a8pNfVdX7jHHiuRz9UiGk3oLq9S8Dyz48TS3hl-Uf_QcFUdjw","role":"customer-vault"}'
+
+curl -i -X POST -H "Accept:application/octet-stream" -H "Content-Type:application/json" -d $PAYLOAD "http://10.0.29.162:8200/v1/auth/kubernetes/login"
