@@ -33,7 +33,11 @@ curl -i -X POST -H "Accept:application/octet-stream" -H "Content-Type:applicatio
 
 
 kubectl exec -ti vault-3464164603-mq77x --namespace=ustaxi /bin/sh
-apk add --quiet --no-progress --update curl jq
+
+
+#apk add --quiet --no-progress --update curl jq
+apt-get update && apt-get install curl && apt-get install jq 
+
 jwt=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
 echo $jwt
 role=rider-vault
