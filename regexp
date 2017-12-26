@@ -1,0 +1,2 @@
+//match all string that doesn't contain word 'NativeCrypto'
+^((?!NativeCrypto|dalvikvm|System.out|MediatekClassFactory|OpenGLRenderer|websync|GraphicBuffer|MaliEGL|ActivityThread|InputMethodManager|PhoneWindow|AwContents|OpenSSLLib|libc-netbsd|Posix).)*$
