@@ -250,3 +250,6 @@ FROM    pg_catalog.pg_namespace n
 JOIN    pg_catalog.pg_proc p
 ON      pronamespace = n.oid
 WHERE   nspname = 'rider';
+
+//list all sequences
+SELECT c.relname FROM pg_class c WHERE c.relkind = 'S';
