@@ -3,10 +3,6 @@
 открыл скрипт в jsfiddle
 там на скрипте в правом верхнем углу кнопка-линка
 
-// This example creates a simple polygon representing the Bermuda Triangle.
-// When the user clicks on the polygon an info window opens, showing
-// information about the polygon's coordinates.
-
 var map;
 var infoWindow;
 
@@ -74,3 +70,6 @@ function showArrays(event) {
 
   infoWindow.open(map);
 }
+
+
+в скрипт загнал координаты КРД
