@@ -1,0 +1,76 @@
+//how to draw KRD polygon
+зашел на https://developers.google.com/maps/documentation/javascript/examples/polygon-arrays?hl=ru
+открыл скрипт в jsfiddle
+там на скрипте в правом верхнем углу кнопка-линка
+
+// This example creates a simple polygon representing the Bermuda Triangle.
+// When the user clicks on the polygon an info window opens, showing
+// information about the polygon's coordinates.
+
+var map;
+var infoWindow;
+
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 5,
+    center: {lat: 44.98714065551758, lng: 38.48854064941406},
+    mapTypeId: 'terrain'
+  });
+
+  // Define the LatLng coordinates for the polygon.
+  var triangleCoords = [
+      {lng:39.61738586425781, lat:44.96577072143555},
+{lng:39.5123291015625, lat:45.06673049926758},
+{lng:39.33174133300781, lat:45.33573532104492},
+{lng:38.953399658203125, lat:45.37385559082031},
+{lng:38.824310302734375, lat:45.24830627441406},
+{lng:38.68766784667969, lat:45.153472900390625},
+{lng:38.48854064941406, lat:44.98714065551758},
+{lng:38.54209899902344, lat:44.7603874206543},
+{lng:39.05021667480469, lat:44.74185562133789},
+{lng:39.26788330078125, lat:44.65888595581055},
+{lng:39.3695068359375, lat:44.79255676269531},
+{lng:39.53704833984375, lat:44.854408264160156},
+{lng:39.61738586425781, lat:44.96577072143555}
+  ];
+
+  // Construct the polygon.
+  var bermudaTriangle = new google.maps.Polygon({
+    paths: triangleCoords,
+    strokeColor: '#FF0000',
+    strokeOpacity: 0.8,
+    strokeWeight: 3,
+    fillColor: '#FF0000',
+    fillOpacity: 0.35
+  });
+  bermudaTriangle.setMap(map);
+
+  // Add a listener for the click event.
+  bermudaTriangle.addListener('click', showArrays);
+
+  infoWindow = new google.maps.InfoWindow;
+}
+
+/** @this {google.maps.Polygon} */
+function showArrays(event) {
+  // Since this polygon has only one path, we can call getPath() to return the
+  // MVCArray of LatLngs.
+  var vertices = this.getPath();
+
+  var contentString = '<b>Bermuda Triangle polygon</b><br>' +
+      'Clicked location: <br>' + event.latLng.lat() + ',' + event.latLng.lng() +
+      '<br>';
+
+  // Iterate over the vertices.
+  for (var i =0; i < vertices.getLength(); i++) {
+    var xy = vertices.getAt(i);
+    contentString += '<br>' + 'Coordinate ' + i + ':<br>' + xy.lat() + ',' +
+        xy.lng();
+  }
+
+  // Replace the info window's content and position.
+  infoWindow.setContent(contentString);
+  infoWindow.setPosition(event.latLng);
+
+  infoWindow.open(map);
+}
