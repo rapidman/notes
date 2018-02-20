@@ -1,0 +1,2 @@
+//convert from windows-1251 to utf-8
+iconv -f windows-1251 -t utf-8 input.txt -o putput_utf.txt
