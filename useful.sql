@@ -197,6 +197,9 @@ drop USER  rider_srv;
 --copy database
 pg_dump ustaxi | psql ustaxi_backup
 
+--export to insert sql
+pg_dump --table=export_table --data-only --column-inserts my_database > data.sql
+
 --create db
 psql -U postgres -d ustaxi -f sql/create-catalog-model.sql
 psql -U postgres -d ustaxi -f sql/create-model.sql
