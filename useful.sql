@@ -90,8 +90,8 @@ SELECT count(pid), usename FROM pg_stat_activity group by usename;
 Describe table
 \d+ tablename
 
-copy (Select id_data From participants) To '/tmp/test.csv' With CSV;
-COPY zip_codes FROM '/path/to/csv/ZIP_CODES.txt' WITH (FORMAT csv);
+\copy (Select id_data From participants) To '/tmp/test.csv' With CSV;
+\COPY zip_codes FROM '/path/to/csv/ZIP_CODES.txt' WITH (FORMAT csv);
 
 # index usage
 select schemaname || '.' || relname as table,
