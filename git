@@ -27,3 +27,6 @@ git clean -df
 //drop latest commit
 git reset --hard HEAD~1
 git push origin HEAD --force
+
+//sync local repo with remote one
+git fetch --prune
