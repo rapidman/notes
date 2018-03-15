@@ -257,3 +257,6 @@ WHERE   nspname = 'rider';
 
 //list all sequences
 SELECT c.relname FROM pg_class c WHERE c.relkind = 'S';
+
+//remove payment method 
+update rider.customer_payment_method set is_removed=true where customer_id in ('...')
