@@ -260,3 +260,6 @@ SELECT c.relname FROM pg_class c WHERE c.relkind = 'S';
 
 //remove payment method 
 update rider.customer_payment_method set is_removed=true where customer_id in ('...')
+
+//pause quartz job
+update predict_job.qrtz_task_runner_triggers set trigger_state='PAUSED' where trigger_name='predict_trigger_44';
