@@ -263,3 +263,21 @@ update rider.customer_payment_method set is_removed=true where customer_id in ('
 
 //pause quartz job
 update predict_job.qrtz_task_runner_triggers set trigger_state='PAUSED' where trigger_name='predict_trigger_44';
+
+
+//disable account
+ustaxi=# select id, phone, email from rider.customer where phone like '%79388659758%';
+                  id                  |    phone     |    email     
+--------------------------------------+--------------+--------------
+ 842a3bc0-87b1-445a-869b-1d2283d8ba1e | +79388659758 | k@fasten.com
+
+
+update rider.customer set phone='+79388659758_old', email='k@fasten.com_old' where id='842a3bc0-87b1-445a-869b-1d2283d8ba1e';
+
+select * from rider.customer_changed_phone where customer_id='842a3bc0-87b1-445a-869b-1d2283d8ba1e';
+  id   |    phone     |         time          |             customer_id              | customer_promo_code 
+-------+--------------+-----------------------+--------------------------------------+---------------------
+ 13649 | +14154639776 | 2018-03-16 15:39:57.5 | 842a3bc0-87b1-445a-869b-1d2283d8ba1e | KI9591
+
+delete from rider.customer_changed_phone where customer_id='842a3bc0-87b1-445a-869b-1d2283d8ba1e';
+
