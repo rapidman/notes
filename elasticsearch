@@ -1,0 +1,128 @@
+curl -i -X POST \
+   -H "Authorization:Basic YWRtaW46dzlNc2xmTDQ4b3I4T044TTlLdVlFaDlw" \
+   -H "kbn-version:5.6.7" \
+   -H "Accept:application/json, text/plain, */*" \
+   -H "Accept-Encoding:gzip, deflate" \
+   -H "Accept-Language:en-US,en;q=0.9" \
+   -H "Connection:keep-alive" \
+   -H "Content-Length:1251" \
+   -H "Host:elk.production:8080" \
+   -H "User-Agent:Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.117 Safari/537.36" \
+   -H "Content-Type:application/json" \
+   -d \
+'{
+  "version": true,
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "query_string": {
+            "analyze_wildcard": true,
+            "query": "\"kubernetes.labels.app:rider\"&\"sign_up\""
+          }
+        },
+        {
+          "bool": {
+            "minimum_should_match": 1,
+            "should": [
+              {
+                "match_phrase": {
+                  "log": "Success sending AppsFlyer event"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "range": {
+            "@timestamp": {
+              "gte": 1523379600000,
+              "lte": 1524070799999,
+              "format": "epoch_millis"
+            }
+          }
+        }
+      ],
+      "must_not": []
+    }
+  },
+  "size": 1000,
+  "sort": [
+    {
+      "@timestamp": {
+        "order": "desc",
+        "unmapped_type": "boolean"
+      }
+    }
+  ],
+  "_source": {
+    "excludes": []
+  },
+  "aggs": {
+    "2": {
+      "date_histogram": {
+        "field": "@timestamp",
+        "interval": "3h",
+        "time_zone": "Asia/Omsk",
+        "min_doc_count": 1
+      }
+    }
+  },
+  "stored_fields": [
+    "*"
+  ],
+  "script_fields": {},
+  "docvalue_fields": [
+    "@timestamp",
+    "timestamp"
+  ],
+  "highlight": {
+    "pre_tags": [
+      "@kibana-highlighted-field@"
+    ],
+    "post_tags": [
+      "@/kibana-highlighted-field@"
+    ],
+    "fields": {
+      "*": {
+        "highlight_query": {
+          "bool": {
+            "must": [
+              {
+                "query_string": {
+                  "analyze_wildcard": true,
+                  "query": "\"kubernetes.labels.app:rider\"&\"sign_up\"",
+                  "all_fields": true
+                }
+              },
+              {
+                "bool": {
+                  "minimum_should_match": 1,
+                  "should": [
+                    {
+                      "match_phrase": {
+                        "log": "Success sending AppsFlyer event"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "range": {
+                  "@timestamp": {
+                    "gte": 1523379600000,
+                    "lte": 1524070799999,
+                    "format": "epoch_millis"
+                  }
+                }
+              }
+            ],
+            "must_not": []
+          }
+        }
+      }
+    },
+    "fragment_size": 2147483647
+  }
+}' \
+ 'http://elk.production:8080/elasticsearch/kube_pods_ustaxi_rider*/_search'
