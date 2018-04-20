@@ -47,3 +47,6 @@ grep -Po '"type":"\K[^"]+' <<< '[customer-gtw2]  2018-02-14 05:37:53.180 INFO  [
 tr -d '\r' < deportation.csv > deportation2.csv
 tr -d '\n' < deportation2.csv > deportation3.csv
 cat deportation3.csv | sed "s/  /','/g" > deportation4.csv
+
+//extract by pattern
+echo "type=CUSTOMER_ERROR, customerId=c2c9fb52-40b1-4f4d-9869-23109315ad76, errorDescription=null"|grep -o 'customerId=[a-ZA-Z0-9\-]\+'
