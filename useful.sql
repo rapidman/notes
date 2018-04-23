@@ -281,3 +281,5 @@ select * from rider.customer_changed_phone where customer_id='842a3bc0-87b1-445a
 
 delete from rider.customer_changed_phone where customer_id='842a3bc0-87b1-445a-869b-1d2283d8ba1e';
 
+//unlock bot payment method
+update rider.customer_payment_method set is_available=true where customer_id = (select id from rider.customer where email=‘microbot-rider@test.com’);
