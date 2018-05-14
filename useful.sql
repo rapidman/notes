@@ -292,3 +292,9 @@ update rider.customer_payment_method set is_available=true where customer_id = (
 > select * from core.billing_customer_payment where customer_id='57ce37ea-d9ba-4098-a594-6621ed27ef19' order by id desc;
 Если последная поездка заблочена за неоплату и нужно разлочить без оплаты, то меняешь amount=0 и payment_status='NEW'.
 Ждешь, когда оплата цены 0 пройдет и перепроверяешь по первым двум запросам, что кастомер разлочен и его карта, которая была в неоплаченной поездке, так же разлочена
+
+//customer change pfone by weeks
+select customer_id, p.phone as phone_change_history, c.phone as current_phone, time, first_ride_region from rider.customer_changed_phone p, rider.customer c where p.customer_id=c.id and first_ride_region='861' order by p.customer_id, p.time;
+
+//locked payment cards count
+select count(*) from rider.customer_payment_method where last_modified_at is not null and last_modified_at >='2018-05-14' and is_removed=false and is_available=false limit 10;
