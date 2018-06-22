@@ -298,3 +298,6 @@ select customer_id, p.phone as phone_change_history, c.phone as current_phone, t
 
 //locked payment cards count
 select count(*) from rider.customer_payment_method where last_modified_at is not null and last_modified_at >='2018-05-14' and is_removed=false and is_available=false limit 10;
+
+//show table list
+\dt+ rider.*
