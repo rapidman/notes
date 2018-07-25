@@ -1,1 +1,12 @@
 curl -I -i -N -H "Connection: Upgrade" -H "Upgrade: websocket" -H "Sec-WebSocket-Key: fGVsbGf8sIrgOHdvcmxkIQ==" -H "Sec-WebSocket-Version: 13"  -H "Host: customer.fasten.com" -H "Origin: https://customer.fasten.com/customer-gateway/customer" https://customer.fasten.com/customer-gateway/customer
+
+
+port=443
+# port=32123 
+curl -i -N \
+    -H "Connection: Upgrade"\
+    -H "Upgrade: websocket"\
+    -H "Sec-WebSocket-Key: SGVsbG8sIHdvcmxkIQ=="\
+    -H "Sec-WebSocket-Version: 13"\
+    -H "Origin: https://customer-gtw.staging.k.fasten.cloud/customer-gateway/customer"\
+    -H "Host: customer-gtw.staging.k.fasten.cloud" https://customer-gtw.staging.k.fasten.cloud/customer-gateway/customer
