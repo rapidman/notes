@@ -301,3 +301,9 @@ select count(*) from rider.customer_payment_method where last_modified_at is not
 
 //show table list
 \dt+ rider.*
+
+//lock customer
+update rider.customer_payment_method set is_available=false where customer_id='9377afd4-6953-4c67-82bd-54c711bfa42c';
+update rider.customer set status='DEAD', before_block_status=status, block_reason='Автоматическая блокировка.Результат проведенного анализа по антифроду. На основе данных по appsflyer_id (от 24.07.2018)' where id='9377afd4-6953-4c67-82bd-54c711bfa42c';
+update rider.customer_blocks set email_blocked=true, email_forever=true, email_from_ts='2018-07-24', phone_blocked=true, phone_forever=true, phone_from_ts='2018-07-24', facebook_blocked=true, facebook_forever=true, facebook_from_ts='2018-07-24', payment_blocked=true, payment_forever=true, payment_from_ts='2018-07-24' where customer_id='9377afd4-6953-4c67-82bd-54c711bfa42c';
+update rider.customer_device_imei set is_blocked=true, last_update_timestamp='2018-07-24' where customer_id='9377afd4-6953-4c67-82bd-54c711bfa42c';
