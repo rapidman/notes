@@ -289,7 +289,7 @@ update rider.customer_payment_method set is_available=true where customer_id = (
 ищещь по номеру телефона, смотришь, заблочен ли он
 > select * from rider.customer_payment_method where customer_id='7cd0d6e3-9ef8-4e77-a132-9c2c78043e16';
 подставляешь сюда айди кастомера и смотришь, какие есть у него методы, и какие заблочены.
-> select * from core.billing_customer_payment where customer_id='57ce37ea-d9ba-4098-a594-6621ed27ef19' order by id desc;
+> select * from cashier.billing_customer_payment where customer_id='57ce37ea-d9ba-4098-a594-6621ed27ef19' order by id desc;
 Если последная поездка заблочена за неоплату и нужно разлочить без оплаты, то меняешь amount=0 и payment_status='NEW'.
 Ждешь, когда оплата цены 0 пройдет и перепроверяешь по первым двум запросам, что кастомер разлочен и его карта, которая была в неоплаченной поездке, так же разлочена
 
