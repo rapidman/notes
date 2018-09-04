@@ -319,3 +319,7 @@ delete from rider_qrtz_job.qrtz_event_sender_simple_triggers;
 delete from rider_qrtz_job.qrtz_event_sender_simprop_triggers;
 delete from rider_qrtz_job.qrtz_event_sender_triggers;
 delete from rider_qrtz_job.qrtz_event_sender_job_details;
+
+//new registered customers
+select count(*) from rider.rider_status_change_log where new_status = 'ACTIVE' and created_at > '2018-09-02 21:00:00' and created_at < '2018-09-03 21:00:00';
+select count(*) from marketer.message_history where created_at > '2018-09-02 21:00:00' and created_at < '2018-09-03 21:00:00' and payload like '%sign_up%';
