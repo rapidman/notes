@@ -33,3 +33,31 @@ git fetch --prune
 
 //git rebase
 https://about.gitlab.com/2018/06/07/keeping-git-commit-history-clean/
+
+
+Что делать, если всё пошло не так?
+
+Методика, которую мы сейчас обсудим, помогает в ситуациях, когда всё идёт не так, как надо. Например, такое происходит, когда вы слишком увлекаетесь копированием готовых решений со StackOverflow, и, после работы, ваш репозиторий оказывается в худшем состоянии чем он был в самом начале. В такую ситуацию, пожалуй, попадали все мы.
+
+Команда git reflog показывает список всего, что вы сделали. Затем она позволяет воспользоваться инструментами Git для отката изменений, для возврата к одному из прошлых состояний репозитория. Стоит отметить, что этот метод стоит рассматривать как последнее средство, и, прежде чем им воспользоваться, стоит как следует подумать. Итак, вывести список того, что было сделано, можно следующей командой:
+
+git reflog
+
+Git помнит все наши действия и в результате выполнения этой команд можно увидеть примерно следующее:
+
+3ff8691 (HEAD -> feature-branch) HEAD@{0}: Branch: renamed refs/heads/feature-brunch to refs/heads/feature-branch
+3ff8691 (HEAD -> feature-branch) HEAD@{2}: checkout: moving from master to feature-brunch
+2b7e508 (master) HEAD@{3}: reset: moving to HEAD~
+3ff8691 (HEAD -> feature-branch) HEAD@{4}: commit: Adds the client logo
+2b7e508 (master) HEAD@{5}: reset: moving to HEAD~1
+37a632d HEAD@{6}: commit: Adds the client logo to the project
+2b7e508 (master) HEAD@{7}: reset: moving to HEAD
+2b7e508 (master) HEAD@{8}: commit (amend): Added contributing info to the site
+dfa27a2 HEAD@{9}: reset: moving to HEAD
+dfa27a2 HEAD@{10}: commit (amend): Added contributing info to the site
+700d0b5 HEAD@{11}: commit: Addded contributing info to the site
+efba795 HEAD@{12}: commit (initial): Initial commit
+
+Обратите внимание на самую левую колонку этого списка. Тут содержатся индексы. Если вам нужно вернуться назад, в некий момент прошлого, выполните следующую команду, заменив {index} соответствующей ссылкой, например — dfa27a2. Выглядит эта команда так:
+
+git reset HEAD@{index}
