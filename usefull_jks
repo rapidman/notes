@@ -3,3 +3,76 @@ keytool -genkeypair -alias qiwi_api_crt -keyalg RSA -keysize 1024 -validity 3650
 keytool -certreq -alias qiwi_api_crt -file certreq.pem -keystore identity.jks
 
 keytool -importcert -alias qiwi_api_crt -file intermediate.pem -keystore identity.jks -storepass ...
+
+
+keytool -genkeypair -alias qiwi_api_crt -keyalg RSA -keysize 1024 -validity 3650 -keypass ... -keystore identity.jks -storepass ...
+
+keytool -genkeypair -alias qiwi_api_crt -keyalg RSA -keysize 1024 -validity 3650 -keystore identity.jks -storepass ...
+
+keytool -certreq -alias qiwi_api_crt -file certreq.pem -keystore identity.jks
+
+keytool -importcert -alias qiwi_api_crt -file intermediate.pem -keystore identity.jks -storepass "..."
+
+java utils.ValidateCertChain -jks qiwi_api_crt_signed identity.jks
+
+keytool -delete -alias qiwi_api_crt -keystore test-keystore3
+
+
+изначальный кейсторе
+
+timur@timur-H97-HD3:/tmp/1$ keytool -v -list -keystore keystore
+Enter keystore password:  
+Keystore type: JKS
+Keystore provider: SUN
+
+Your keystore contains 1 entry
+
+Alias name: qiwi_api_crt
+Creation date: Oct 4, 2018
+Entry type: PrivateKeyEntry
+Certificate chain length: 1
+Certificate[1]:
+Owner: EMAILADDRESS=vladimir@fasten.com, CN=Vladimir Ostapenko, OU=IT Dept., O=Fasten Inc., L=Krasnodar, ST=Krasnodar region, C=RU
+Issuer: CN=acquiring-ca, OU=IT, O=QIWI, L=Moscow, ST=Moscow, C=RU
+Serial number: b6edc0da61922267
+Valid from: Wed Oct 04 14:36:08 NOVT 2017 until: Thu Oct 04 14:36:08 NOVT 2018
+Certificate fingerprints:
+	 MD5:  0E:F6:24:D1:20:D6:B1:31:98:7A:88:26:6C:5A:40:E4
+	 SHA1: FD:F2:AF:F5:C6:84:2A:2D:4C:FA:23:DB:9F:94:09:C5:E1:42:53:B4
+	 SHA256: 69:37:67:44:EB:0A:79:3C:63:34:21:93:EF:4E:B2:C5:B3:77:A6:06:EE:54:72:E4:F5:7A:29:55:94:FD:C5:84
+Signature algorithm name: SHA256withRSA
+Subject Public Key Algorithm: 1024-bit RSA key
+Version: 1
+
+
+*******************************************
+*******************************************
+
+норма
+/tmp/2/33$ curl --request POST --header "Content-Type: application/json" --key key.pem --cert cert.pem "https://acquiring.qiwi.com/merchant/direct"
+curl --request POST --header "Content-Type: application/json" -X POST -d '{"opcode":51,"merchant_site":150000,"amount":"0","currency":643,"phone":"111"}' --key key.pem --cert cert.pem "https://acquiring.qiwi.com/merchant/direct"
+
+
+keytool -certreq -alias qiwi_api_crt -file certreq.pem -keystore identity.jks
+
+1. delete certificate
+keytool -delete -noprompt -alias qiwi_api_crt  -keystore test-keystore -storepass "..."
+keytool -delete -noprompt -alias qiwi_api_crt_signed  -keystore test-keystore -storepass "..."
+
+
+2.Import
+keytool -importcert -trustcacerts -file cert.pem -keystore test-keystore -alias "qiwi_api_crt"
+keytool -import -trustcacerts -alias qiwi_api_crt -file combined.pem -keystore test-keystore
+keytool -v -list -keystore test-keystore
+
+openssl x509 -outform der -in combined.pem -out certificate.der
+keytool -import -alias qiwi_api_crt -keystore test-keystore -file certificate.der
+
+openssl pkcs12 -export -in cert.pem -inkey key.pem -out keystore.p12 -name "qiwi_api_crt"
+
+3. Export cert
+openssl pkcs12 -in test-keystore -out client.pem -clcerts -nokeys
+
+openssl pkcs12 -in test-keystore -out ca.pem -cacerts -nokeys -storepass "..."
+openssl pkcs12 -in test-keystore -out client.pem -clcerts -nokeys -storepass "..."
+openssl pkcs12 -in test-keystore -out key.pem -nocerts -storepass "..."
