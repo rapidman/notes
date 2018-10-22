@@ -76,3 +76,9 @@ openssl pkcs12 -in test-keystore -out client.pem -clcerts -nokeys
 openssl pkcs12 -in test-keystore -out ca.pem -cacerts -nokeys -storepass "..."
 openssl pkcs12 -in test-keystore -out client.pem -clcerts -nokeys -storepass "..."
 openssl pkcs12 -in test-keystore -out key.pem -nocerts -storepass "..."
+
+
+//change keystore password
+keytool -importkeystore \
+    -srckeystore apns.p12 -srcstoretype PKCS12 -srcstorepass:file ssp \
+    -destkeystore dest_apns.p12 -deststoretype PKCS12 -deststorepass:file dsp -destkeypass:file dsp
