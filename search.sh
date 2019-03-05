@@ -30,6 +30,7 @@ egrep -R "word-1|word-2” directory-path
 //If you want to grep recursively in all .gz files, you can use:
 find -name \*client.log*.gz -print0 | xargs -0 zgrep "41956331"
 find -name mobile.log-20160217.gz -print0 | xargs -0 zgrep "b41a1420955128e1d0f2efe62a73948d5e74f783"
+find -name \*.* -print0 | xargs -0 grep "71547727511"
 
 //cut log file
 sed -n '8,12p' yourfile
