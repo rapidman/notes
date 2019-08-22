@@ -61,3 +61,6 @@ efba795 HEAD@{12}: commit (initial): Initial commit
 Обратите внимание на самую левую колонку этого списка. Тут содержатся индексы. Если вам нужно вернуться назад, в некий момент прошлого, выполните следующую команду, заменив {index} соответствующей ссылкой, например — dfa27a2. Выглядит эта команда так:
 
 git reset HEAD@{index}
+
+//find branch creator
+git for-each-ref --format='%(color:cyan)%(authordate:format:%m/%d/%Y %I:%M %p)    %(align:25,left)%(color:yellow)%(authorname)%(end) %(color:reset)%(refname:strip=3)' --sort=authordate refs/remotes
