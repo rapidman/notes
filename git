@@ -64,3 +64,6 @@ git reset HEAD@{index}
 
 //find branch creator
 git for-each-ref --format='%(color:cyan)%(authordate:format:%m/%d/%Y %I:%M %p)    %(align:25,left)%(color:yellow)%(authorname)%(end) %(color:reset)%(refname:strip=3)' --sort=authordate refs/remotes
+
+//batch delete branches
+git branch -r --merged|egrep -v "msb_gitlab|release|dev|master"| sed 's/origin\///'| xargs -n 1 git push --delete origin
