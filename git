@@ -67,3 +67,32 @@ git for-each-ref --format='%(color:cyan)%(authordate:format:%m/%d/%Y %I:%M %p)  
 
 //batch delete branches
 git branch -r --merged|egrep -v "msb_gitlab|release|dev|master"| sed 's/origin\///'| xargs -n 1 git push --delete origin
+
+
+
+Пример работы с ветками в Git.
+
+1. На разработчика назначают задачу http://youtrack.azoft.azoft.com/issue/[issue ID],
+например речь идет о добавлении новой фичи “Реализовать просмотр акций клиента”.
+
+2. Разработчик создает новый бранч локально и затем пушит его в origin (в удаленный репозиторий). Для наименования ветки использовать паттерн “feature-{issueId}” где issueId это номер тикета из youtrack.
+
+git checkout -b feature-777 develop
+
+git push -u origin feature-777
+
+3. Разработчик проводит работу, периодически пушит изменения в
+origin/feature-777
+для того чтобы код можно было ревьюить.
+
+4. После завершения работы, разработчик пушит свои изменения в бранч origin/feature-777 	и в комментах указывает refs#{ticket ID} где ticket ID это ИД тикета из youtrack к которому относятся эти изменения (используется для интеграции youtrack и git). После того как задачу аппрувит Тимлид, разработчик вливает свои изменения в ветку develop.
+
+git checkout develop //переключаемся на локальную ветку develop отслеживающую удаленную origin/develop (не забываем ее обновить перед этим)
+
+git merge --no-ff  feature-777 //мержим ее с нашей локальной веткой
+
+git push origin develop //сохраняем изменения на удаленную ветку develop
+
+git branch -d feature-777 //удаляем локальную ветку
+
+git push origin :feature-777 //удаляем удаленную ветку
