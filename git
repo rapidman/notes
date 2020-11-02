@@ -98,3 +98,19 @@ git branch -d feature-777 //удаляем локальную ветку
 git push origin :feature-777 //удаляем удаленную ветку
 
 unix2dos $file  //заменяет LF на CLRF
+
+
+//Remove whitespace changes, then `git add -p`
+git diff -w --no-color | git apply --cached --ignore-whitespace && git checkout -- . && git reset && git add -p
+Bash
+git diff -w --no-color creates a diff
+
+git apply --cached --ignore-whitespace applies the diff ignoring whitepace, and indexes it
+
+git checkout — . removes the unindexed “whitespace” changes
+
+git reset resets the index to just he non-whitespace cahnges
+
+git add -p adds the non-whitespace changes in patch mode
+
+We did this with it alias gwap=“git diff -w --no-color | git apply --cached --ignore-whitespace && git checkout -- . && git reset && git add -p”
