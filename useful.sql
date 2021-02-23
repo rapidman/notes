@@ -323,3 +323,21 @@ delete from rider_qrtz_job.qrtz_event_sender_job_details;
 //new registered customers
 select count(*) from rider.rider_status_change_log where new_status = 'ACTIVE' and created_at > '2018-09-02 21:00:00' and created_at < '2018-09-03 21:00:00';
 select count(*) from marketer.message_history where created_at > '2018-09-02 21:00:00' and created_at < '2018-09-03 21:00:00' and payload like '%sign_up%';
+
+
+//list-user-defined-functions
+select n.nspname as function_schema,
+       p.proname as function_name,
+       l.lanname as function_language,
+       case when l.lanname = 'internal' then p.prosrc
+            else pg_get_functiondef(p.oid)
+            end as definition,
+       pg_get_function_arguments(p.oid) as function_arguments,
+       t.typname as return_type
+from pg_proc p
+left join pg_namespace n on p.pronamespace = n.oid
+left join pg_language l on p.prolang = l.oid
+left join pg_type t on t.oid = p.prorettype 
+where n.nspname not in ('pg_catalog', 'information_schema')
+order by function_schema,
+         function_name;
