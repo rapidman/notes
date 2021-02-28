@@ -1,6 +1,7 @@
 //https://docs.docker.com/get-started
 
 sudo docker system prune
+docker system prune -a //remove all unused containers
 docker container ls
 docker images
 sudo docker ps
@@ -9,3 +10,6 @@ docker restart <container_id>
 sudo docker system prune
 docker image ls
 docker image rmi -f common/oracle-serverjdk-8
+
+//run postgres
+docker run --name financing -d -p 5432:5432 -e POSTGRES_PASSWORD=postgres postgres:alpine
