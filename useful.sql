@@ -341,3 +341,17 @@ left join pg_type t on t.oid = p.prorettype
 where n.nspname not in ('pg_catalog', 'information_schema')
 order by function_schema,
          function_name;
+
+
+//long running queries
+SELECT
+  pid,
+  now() - pg_stat_activity.query_start AS duration,
+  query,
+  state
+FROM pg_stat_activity
+WHERE (now() - pg_stat_activity.query_start) > interval '5 minutes';
+//In order to cancel these long running queries you should execute:
+SELECT pg_cancel_backend(__pid__);
+//The pid parameter is the value returned in the pg_stat_activity select.
+//It may take a few seconds to stop the query entirely using the pg_cancel_backend command.
