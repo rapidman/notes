@@ -53,3 +53,6 @@ cat deportation3.csv | sed "s/  /','/g" > deportation4.csv
 echo "type=CUSTOMER_ERROR, customerId=c2c9fb52-40b1-4f4d-9869-23109315ad76, errorDescription=null"|grep -o 'customerId=[a-ZA-Z0-9\-]\+'
 echo 'any string to skip "log": " 2018-04-18 ' |grep -o 'log": ".*'
  echo "Here is a string" | grep -o -P '(?<=Here).*(?=string)'
+
+
+zgrep -Ph 'Executed.*\d+/\d{2,}/\d+/\d+' case/20210514/server.default.cexliveapp2.log.20210514_0* | grep -Po "^. 21051. ...." | uniq -c
