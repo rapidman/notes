@@ -56,3 +56,5 @@ echo 'any string to skip "log": " 2018-04-18 ' |grep -o 'log": ".*'
 
 
 zgrep -Ph 'Executed.*\d+/\d{2,}/\d+/\d+' case/20210514/server.default.cexliveapp2.log.20210514_0* | grep -Po "^. 21051. ...." | uniq -c
+for i in {20210401..20210430}; do cd ~/case/$i; echo $i; zgrep "Account not in cache" activator*; done
+
