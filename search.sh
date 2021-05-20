@@ -60,4 +60,5 @@ for i in {20210401..20210430}; do cd ~/case/$i; echo $i; zgrep "Account not in c
 
 
 find -name \*dxtrade5.default*.gz -print0 | xargs -0 zgrep "Exception" |grep -v "NamingException"|grep -v "javax.naming.NameNotFoundException" > /tmp/log
+for i in {20210428..20210512}; do cd /opt/cexlive/case/$i; echo $i; find -name \*dxtrade5.default*.gz -print0 | xargs -0 zgrep "chartFeedSubtopic" | uniq -c > /tmp/log_all; done
 
