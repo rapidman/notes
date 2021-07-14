@@ -62,3 +62,11 @@ for i in {20210401..20210430}; do cd ~/case/$i; echo $i; zgrep "Account not in c
 find -name \*dxtrade5.default*.gz -print0 | xargs -0 zgrep "Exception" |grep -v "NamingException"|grep -v "javax.naming.NameNotFoundException" > /tmp/log
 for i in {20210428..20210512}; do cd /opt/cexlive/case/$i; echo $i; find -name \*dxtrade5.default*.gz -print0 | xargs -0 zgrep "chartFeedSubtopic" | wc -l > /tmp/log_all; done
 
+в копилку необычных решений: захотел я посчитать среднее для некоего нагрепанного значения. ну и пошел у гугла спросить как это сделать на баше. конечно есть куча решений через скрипты, через awk и прочее, но внезапно самым простым оказался jq:
+grep AccountGroupServiceImpl.refreshCacheInNewTransaction log/server.default.perfdevstressdb1.log | grep -Po '\[\d+mks\]' |grep -Po '\d+' | jq -s '{minimum:min,maximum:max,average:(add/length),median:(sort|if length%2==1 then.[length/2|floor]else[.[length/2-1,length/2]]|add/2 end)}'
+{
+  "minimum": 1584,
+  "maximum": 370198,
+  "average": 17032.31160804585,
+  "median": 9300
+}
