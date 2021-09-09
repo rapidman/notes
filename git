@@ -18,6 +18,8 @@
 
 This is based on https://gist.github.com/739288 thanks to nickfloyd for it
 
+//create branch from tag
+git checkout -b [new branch name] [tag name]
 
 //force pull
 git fetch origin master
