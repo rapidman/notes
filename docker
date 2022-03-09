@@ -17,3 +17,4 @@ docker run --name financing -d -p 5432:5432 -e POSTGRES_PASSWORD=postgres postgr
 
 docker run --name postgres --net host -e POSTGRES_PASSWORD=postgres -d postgres
 psql -U postgres -h localhost -p 5432
+docker exec -i -t [container name]  psql -U postgres
