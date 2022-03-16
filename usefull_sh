@@ -1,2 +1,7 @@
 for i in `seq 1 10000`; do curl -w '%{time_namelookup}\n' -o /dev/null -s $url >> /tmp/log.txt; done
 cat /tmp/log.txt | sort | uniq | tail -10
+
+
+sudo update-alternatives --config java
+
+sudo update-alternatives --config javac
