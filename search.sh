@@ -70,3 +70,8 @@ grep AccountGroupServiceImpl.refreshCacheInNewTransaction log/server.default.per
   "average": 17032.31160804585,
   "median": 9300
 }
+
+//batch rename files
+for file in *.gz; do
+  mv "$file" "$(echo ${file} | grep -o -P '(?<=server.default.).*(?=)')"
+done
