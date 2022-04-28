@@ -355,3 +355,35 @@ WHERE (now() - pg_stat_activity.query_start) > interval '5 minutes';
 SELECT pg_cancel_backend(__pid__);
 //The pid parameter is the value returned in the pg_stat_activity select.
 //It may take a few seconds to stop the query entirely using the pg_cancel_backend command.
+
+===============================
+Associated profiles:
+
+select distinct profile_id from m_settings_nodes where deleted=false and active='Y' and domain ilike '%quoting%' and content ilike '%Crypto%' and content ilike '%:"feed"%' and active='Y' and deleted=false;
+ profile_id  
+-------------
+  4314039597
+ 42949672961
+These profiles are assigned to the root group=1:
+
+select * from settings_profile_assignments where settings_profile_id in (42949672961,4314039597) and active='Y' and removed_item=false;
+
+version                | 1059
+user_session_id        | 19449085
+creation_time          | 2020-08-07 12:38:47.791
+time_period_key        | SYS_ALWAYS
+virtual_group_key_type | GROUP
+account_id             | 
+group_id               | 1
+settings_profile_id    | 42949672961
+active                 | t
+removed_item           | f
+Crypto is assigned to nodes 0 and 1:
+
+select profile_id, node_id from m_settings_nodes where profile_id in (42949672961,4314039597) and domain='Quoting' and active='Y' and deleted=false and content ilike '%:"crypto"%'  limit 10;
+ profile_id  | node_id 
+-------------+---------
+  4314039597 |       0
+ 42949672961 |       1
+ 42949672961 |       0
+  4314039597 |       1
