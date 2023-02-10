@@ -1,4 +1,4 @@
-//https://docs.docker.com/get-started
+#https://docs.docker.com/get-started
 
 sudo docker system prune
 docker system prune -a //remove all unused containers
@@ -12,10 +12,54 @@ docker image ls
 docker image rmi -f common/oracle-serverjdk-8
 docker-compose down --rmi all --volumes
 
-//run postgres
+#run postgres
 docker run --name financing -d -p 5432:5432 -e POSTGRES_PASSWORD=postgres postgres:alpine
 
 
 docker run --name postgres --net host -e POSTGRES_PASSWORD=postgres -d postgres
 psql -U postgres -h localhost -p 5432
 docker exec -i -t [container name]  psql -U postgres
+
+#Остановка всех контейнеров:
+
+docker stop $(docker ps -a -q)
+
+#Принудительная Остановка всех контейнеров:
+
+docker kill $(docker ps -q)
+
+#Удаление всех Остановленных контейнеров:
+
+docker rm $(docker ps -a -q)
+
+#Удаление всех образов контейнеров:
+
+docker rmi $(docker images -q)
+
+#Остановка и удаление контейнеров:
+
+docker-compose down
+
+#Остановка и удаление контейнеров и томов (возврат в исходное состояние):
+
+docker-compose down -v
+
+#Подмена запущенного контейнера после пересборки:
+
+docker-compose up --detach --build [имя_контейнера]
+
+#Выполнить команду внутри контейнера:
+
+docker-compose exec [имя_контейнера] [команда]
+
+#Посмотреть вывод контейнера:
+
+docker-compose logs [имя_контейнера]
+
+#Убить все запущенные контейнеры:
+
+docker ps -q | xargs docker kill
+
+#Удалить все локальные контейнеры (!физически, придется качать)
+
+docker images -q | xargs docker rmi -f
