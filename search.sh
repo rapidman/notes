@@ -75,3 +75,6 @@ grep AccountGroupServiceImpl.refreshCacheInNewTransaction log/server.default.per
 for file in *.gz; do
   mv "$file" "$(echo ${file} | grep -o -P '(?<=server.default.).*(?=)')"
 done
+
+//search new created files by time
+find . -type f -newermt 2022-02-21 -not -newermt 2022-02-23
