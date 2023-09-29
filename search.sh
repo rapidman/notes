@@ -43,6 +43,7 @@ cat -n yourfile | sed -n '8,12p'
 //extract token by prefix
 grep -Po 'spring.profiles.active=\K[^ ]+' <<<'00:28:04 /usr/lib/jvm/jre/bin/java -DJDBC_CONNECTION_STRING= -Dspring.profiles.active=qa -XX:MaxPermSize=256'
 grep -Po '"type":"\K[^"]+' <<< '[customer-gtw2]  2018-02-14 05:37:53.180 INFO  [customerGtwEndpoint-14-C-1] [com.neklo.ustaxi.gateway.service.impl.CustomerTaskExecutorRedisImpl] [partition=27, offset=1493501, key=e3f581e3-7a96-45e0-b8f8-7fea82719655] - Send json response to user [e3f581e3-7a96-45e0-b8f8-7fea82719655] to session [tD8ZE_LxNzEdRPoxO6niEZ6j]: {"type":"CUSTOMER_TRACKING_CARS_BY_ZONE_COORD_RESP","sequence_id"
+ps axu|grep compose-ws-cvpz.yml|grep -o -P '(?<=user).*?(?=0.0)'
 
 //convert to comma delimited string
 tr -d '\r' < deportation.csv > deportation2.csv
