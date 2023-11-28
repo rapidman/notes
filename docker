@@ -23,6 +23,7 @@ docker exec -i -t [container name]  psql -U postgres
 #Остановка всех контейнеров:
 
 docker stop $(docker ps -a -q)
+docker stop $(docker ps -a -q)
 
 #Принудительная Остановка всех контейнеров:
 
