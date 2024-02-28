@@ -1,2 +1,3 @@
 SELECT * FROM all_indexes where INDEX_NAME like '%CARDS_DOC_ID%';
 select * from ALL_IND_COLUMNS where INDEX_NAME like '%CARDS_DOC_ID%';
+SELECT * FROM all_source WHERE name like '%REG_UTIL%' ORDER BY TYPE, LINE;
