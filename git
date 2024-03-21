@@ -33,6 +33,8 @@ git push origin HEAD --force
 //sync local repo with remote one
 git fetch --prune
 
+git remote prune origin
+
 //git rebase
 https://about.gitlab.com/2018/06/07/keeping-git-commit-history-clean/
 
